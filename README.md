@@ -60,12 +60,3 @@ $tracer = new Tracer($logger);
 $tracer->send();
 ```
 
-## Disable tracing
-
-You can use the `NullLogger`
-
-```php
-$null = new NullLogger();
-$tracer = new Tracer($null);
-```
-
