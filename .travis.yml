@@ -2,5 +2,12 @@ language: php
 php:
   - '7.0'
   - '7.1'
-before_script: composer install --prefer-source --no-interaction
-script: vendor/bin/phpunit tests --process-isolation
+before_script:
+  - composer install --prefer-source --no-interaction
+
+script:
+  - vendor/bin/phpunit tests --process-isolation --coverage-clover=clover.xml
+
+after_script:
+  - wget https://scrutinizer-ci.com/ocular.phar
+  - php ocular.phar code-coverage:upload --format=php-clover clover.xml
