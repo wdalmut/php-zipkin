@@ -1,6 +1,8 @@
 # PHP ZipKin
 
 [![Build Status](https://travis-ci.org/wdalmut/php-zipkin.svg?branch=master)](https://travis-ci.org/wdalmut/php-zipkin)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/wdalmut/php-zipkin/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/wdalmut/php-zipkin/?branch=master) 
+[![Code Coverage](https://scrutinizer-ci.com/g/wdalmut/php-zipkin/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/wdalmut/php-zipkin/?branch=master)
 
 A simple ZipKin implementation to trace your microservices based application
 
