@@ -5,6 +5,8 @@ use Corley\Zipkin\LoggerInterface;
 
 class HttpLogger implements LoggerInterface
 {
+    private $options;
+
 	public function __construct($options = [])
     {
         $defaults = [
