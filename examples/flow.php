@@ -11,8 +11,12 @@ require __DIR__ . '/../vendor/autoload.php';
 $logger = new HttpLogger(["host" => "http://localhost:9411"]);
 $tracer = new Tracer($logger);
 
+if (!empty($_SERVER["HTTP_X_SAMPLED"])) {
+    $tracer->setIsSampled($_SERVER["HTTP_X_SAMPLED"]);
+}
+
 $rootSpan = new ServerReceive("list_my_users", "App 1", "10.64.98.14:80");
-if (!empty($_SERVER['HTTP_X_B3_SPANID'])) {
+if (!empty($_SERVER['HTTP_X_B3_TRACEID'])) {
     $rootSpan->restoreContext($_SERVER['HTTP_X_B3_TRACEID'], $_SERVER['HTTP_X_B3_SPANID']);
 }
 $tracer->addSpan($rootSpan);
