@@ -14,7 +14,6 @@ class SpanTest extends TestCase
         $data = json_decode(json_encode($span), true);
 
         $this->assertEquals("getUsers", $data["name"]);
-        $this->assertGreaterThan(0, $data["duration"]);
     }
 
     public function testRestoreFromContext()

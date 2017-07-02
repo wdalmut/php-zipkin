@@ -1,5 +1,7 @@
 # PHP ZipKin
 
+[![Build Status](https://travis-ci.org/wdalmut/php-zipkin.svg?branch=master)](https://travis-ci.org/wdalmut/php-zipkin)
+
 A simple ZipKin implementation to trace your microservices based application
 
 
