@@ -29,6 +29,11 @@ class HttpLogger implements LoggerInterface
             ]
         ];
         $context = stream_context_create(array_replace_recursive($contextOptions, $this->options['contextOptions']));
-        @file_get_contents($this->options['host'] . $this->options['endpoint'], false, $context);
+
+        try {
+            file_get_contents($this->options['host'] . $this->options['endpoint'], false, $context);
+        } catch(\Exception $e) {
+            // this exception is suppressed
+        }
     }
 }
