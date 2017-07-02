@@ -19,7 +19,7 @@ $otherSpan->restoreContextFromHeaders($request);
 $otherSpan->getBinaryAnnotations()->set("http.method", "GET");
 
 // create a new span (service call)
-$span = new ClientSend("getUser", "user.service", "user.corley:80");
+$span = new ClientSend("getVipUser", "oauth2");
 // set span as child of the root span
 $span->childOf($otherSpan);
 // add span to the tracer
@@ -35,12 +35,12 @@ $span->add("reservedCustomer);
 $span->receive();
 
 // close the server sent span
-$otherSpan->sent("name", "hostname:port");
+$otherSpan->sent();
 ```
 
 ## Search for a Span
 
-When you change your context typically you lost your span. You can use your
+When you change your context may you lost a span reference. You can use your
 binary annotation to search for a particular span
 
 ```php
