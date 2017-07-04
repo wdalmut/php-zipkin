@@ -22,8 +22,23 @@ class SpanTest extends TestCase
         $span->restoreContext("ciao", "mondo");
 
         $data = json_decode(json_encode($span), true);
+
         $this->assertEquals("ciao", $data["traceId"]);
-        $this->assertEquals("mondo", $data["parentId"]);
+        $this->assertEquals("mondo", $data["id"]);
+        $this->assertArrayHasKey("id", $data);
+        $this->assertArrayNotHasKey("parentId", $data);
+    }
+
+    public function testRestoreFromContextWithParentId()
+    {
+        $span = new Span("getUsers");
+        $span->restoreContext("ciao", "mondo", "test");
+
+        $data = json_decode(json_encode($span), true);
+
+        $this->assertEquals("ciao", $data["traceId"]);
+        $this->assertEquals("mondo", $data["id"]);
+        $this->assertEquals("test", $data["parentId"]);
         $this->assertArrayHasKey("id", $data);
     }
 
@@ -40,8 +55,27 @@ class SpanTest extends TestCase
 
         $data = json_decode(json_encode($span), true);
         $this->assertEquals("ciao", $data["traceId"]);
-        $this->assertEquals("mondo", $data["parentId"]);
+        $this->assertEquals("mondo", $data["id"]);
         $this->assertArrayHasKey("id", $data);
+        $this->assertArrayNotHasKey("parentId", $data);
+    }
+
+    public function testRestoreFromPsr7RequestWithParentId()
+    {
+        $request = (new Request())
+            ->withUri(new Uri('http://example.com'))
+            ->withMethod('GET')
+            ->withHeader('X-B3-TraceId', "ciao")
+            ->withHeader('X-B3-SpanId', 'mondo')
+            ->withHeader('X-B3-ParentSpanId', 'hello');
+
+        $span = new Span("getUsers");
+        $span->restoreContextFromRequest($request);
+
+        $data = json_decode(json_encode($span), true);
+        $this->assertEquals("ciao", $data["traceId"]);
+        $this->assertEquals("mondo", $data["id"]);
+        $this->assertEquals("hello", $data["parentId"]);
     }
 
     public function testRestoreFromAnEmptyPsr7Request()

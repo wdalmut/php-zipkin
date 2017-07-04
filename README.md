@@ -11,7 +11,7 @@ $otherSpan = new ServerReceive("get_users", "oauth2", "auth.corley:80");
 // add span to the tracer
 $tracer->addSpan($otherSpan);
 
-// restore the root span using headers (X-B3-TraceId, X-B3-SpanId)
+// restore the root span using headers (X-B3-TraceId, X-B3-SpanId, X-B3-ParentSpanId)
 $otherSpan->restoreContextFromHeaders($request);
 
 // add a binary annotation on this span
@@ -53,6 +53,19 @@ $span->setChildOf($rootSpan);
 
 ```php
 $logger = new HttpLogger($zipkinHost);
+$tracer = new Tracer($logger);
+
+// ...
+
+$tracer->send();
+```
+
+## Noop tracer
+
+If you want to cut off the tracer your can use our `NoopTracer`
+
+```php
+$logger = new NoopLogger($zipkinHost);
 $tracer = new Tracer($logger);
 
 // ...
